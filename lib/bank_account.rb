@@ -16,6 +16,10 @@ class BankAccount
     @statement << [date: get_date, credit: "", debit: money, balance: @balance]
   end
 
+  def print_statement
+    print "date || credit || debit || balance"
+  end
+
   private
 
   def get_date

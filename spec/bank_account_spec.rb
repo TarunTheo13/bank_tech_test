@@ -34,4 +34,10 @@ describe BankAccount do
     end
   end
 
+  describe '#print_statement' do
+    it 'outputs only the header when no money has been withdrawn or deposited' do
+      expect {subject.print_statement}.to output("date || credit || debit || balance").to_stdout
+    end
+  end
+
 end
