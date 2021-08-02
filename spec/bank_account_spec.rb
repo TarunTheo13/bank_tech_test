@@ -1,6 +1,7 @@
 require 'bank_account'
 
 describe BankAccount do
+
   describe '#initialize' do
     it 'initializes with a bank balance of zero' do
       expect(subject.balance).to eq 0
@@ -12,6 +13,11 @@ describe BankAccount do
       subject.deposit(500)
       expect(subject.balance).to eq 500
     end
+
+    it 'records transaction in the statement array' do
+      subject.deposit(500)
+      expect(subject.statement[0]).to eq [date: Time.new.strftime("%d/%m/%y"), credit: 500, debit: "", balance: 500]
+    end
   end
 
   describe '#withdraw' do
@@ -19,6 +25,12 @@ describe BankAccount do
       subject.deposit(500)
       subject.withdraw(300)
       expect(subject.balance).to eq 200
+    end
+
+    it 'records transaction in the statement array' do
+      subject.deposit(500)
+      subject.withdraw(300)
+      expect(subject.statement[1]).to eq [date: Time.new.strftime("%d/%m/%y"), credit: "", debit: 300, balance: 200]
     end
   end
 
