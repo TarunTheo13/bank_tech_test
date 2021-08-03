@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BankAccount
   attr_reader :balance, :statement
 
@@ -17,11 +19,11 @@ class BankAccount
   end
 
   def print_statement
-    puts "date || credit || debit || balance"
+    puts 'date || credit || debit || balance'
     @statement.reverse_each do |transaction|
-      if transaction[:debit] == nil
+      if transaction[:debit].nil?
         puts "#{transaction[:date]} || #{'%.2f' % transaction[:credit]} || || #{'%.2f' % transaction[:balance]}"
-      elsif transaction[:credit] == nil
+      elsif transaction[:credit].nil?
         puts "#{transaction[:date]} || || #{'%.2f' % transaction[:debit]} || #{'%.2f' % transaction[:balance]}"
       end
     end
@@ -29,12 +31,11 @@ class BankAccount
 
   private
 
-  def get_date
-    Time.new.strftime("%d/%m/%y")
+  def current_date
+    Time.new.strftime('%d/%m/%y')
   end
 
   def record_transaction(credit = nil, debit = nil)
-    @statement << {date: get_date, credit: credit, debit: debit, balance: @balance}
+    @statement << { date: current_date, credit: credit, debit: debit, balance: @balance }
   end
-
 end
