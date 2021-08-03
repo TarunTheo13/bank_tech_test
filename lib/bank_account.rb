@@ -8,21 +8,21 @@ class BankAccount
 
   def deposit(money)
     @balance += money
-    @statement << [date: get_date, credit: money, debit: "", balance: @balance]
+    record_transaction(money)
   end
 
   def withdraw(money)
     @balance -= money
-    @statement << [date: get_date, credit: "", debit: money, balance: @balance]
+    record_transaction(nil, money)
   end
 
   def print_statement
     puts "date || credit || debit || balance"
     @statement.reverse_each do |transaction|
-      if transaction[0][:debit] == ""
-        puts "#{transaction[0][:date]} || #{'%.2f' % transaction[0][:credit]} || || #{'%.2f' % transaction[0][:balance]}"
-      elsif transaction[0][:credit] == ""
-        puts "#{transaction[0][:date]} || || #{'%.2f' % transaction[0][:debit]} || #{'%.2f' % transaction[0][:balance]}"
+      if transaction[:debit] == nil
+        puts "#{transaction[:date]} || #{'%.2f' % transaction[:credit]} || || #{'%.2f' % transaction[:balance]}"
+      elsif transaction[:credit] == nil
+        puts "#{transaction[:date]} || || #{'%.2f' % transaction[:debit]} || #{'%.2f' % transaction[:balance]}"
       end
     end
   end
@@ -31,6 +31,10 @@ class BankAccount
 
   def get_date
     Time.new.strftime("%d/%m/%y")
+  end
+
+  def record_transaction(credit = nil, debit = nil)
+    @statement << {date: get_date, credit: credit, debit: debit, balance: @balance}
   end
 
 end
