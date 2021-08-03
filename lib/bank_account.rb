@@ -18,8 +18,12 @@ class BankAccount
 
   def print_statement
     puts "date || credit || debit || balance"
-    @statement.each do |transaction|
-      puts "#{transaction[0][:date]} || #{'%.2f' % transaction[0][:credit]} || || #{'%.2f' % transaction[0][:balance]}"
+    @statement.reverse_each do |transaction|
+      if transaction[0][:debit] == ""
+        puts "#{transaction[0][:date]} || #{'%.2f' % transaction[0][:credit]} || || #{'%.2f' % transaction[0][:balance]}"
+      elsif transaction[0][:credit] == ""
+        puts "#{transaction[0][:date]} || || #{'%.2f' % transaction[0][:debit]} || #{'%.2f' % transaction[0][:balance]}"
+      end
     end
   end
 

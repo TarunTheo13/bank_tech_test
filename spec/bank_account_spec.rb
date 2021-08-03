@@ -44,6 +44,12 @@ describe BankAccount do
       expect { subject.print_statement }.to output("date || credit || debit || balance\n#{Time.new.strftime("%d/%m/%y")} || 500.00 || || 500.00\n").to_stdout
     end
 
+    it 'outputs the statement after three transactions with the newest transaction first'do
+      subject.deposit(1000)
+      subject.deposit(2000)
+      subject.withdraw(500)
+      expect { subject.print_statement }.to output("date || credit || debit || balance\n#{Time.new.strftime("%d/%m/%y")} || || 500.00 || 2500.00\n#{Time.new.strftime("%d/%m/%y")} || 2000.00 || || 3000.00\n#{Time.new.strftime("%d/%m/%y")} || 1000.00 || || 1000.00\n").to_stdout
+    end
   end
 
 end
