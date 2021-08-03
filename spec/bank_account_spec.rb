@@ -36,8 +36,14 @@ describe BankAccount do
 
   describe '#print_statement' do
     it 'outputs only the header when no money has been withdrawn or deposited' do
-      expect {subject.print_statement}.to output("date || credit || debit || balance").to_stdout
+      expect { subject.print_statement }.to output("date || credit || debit || balance\n").to_stdout
     end
+
+    it 'outputs the statement after one deposit' do
+      subject.deposit(500)
+      expect { subject.print_statement }.to output("date || credit || debit || balance\n#{Time.new.strftime("%d/%m/%y")} || 500.00 || || 500.00\n").to_stdout
+    end
+
   end
 
 end
